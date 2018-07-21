@@ -7,14 +7,41 @@ class Home extends StatefulWidget {
   }
 }
 
+/*
+  Mercury: 0.38
+  Venus: 0.91
+  Earth: 1.00
+  Mars: 0.38
+  Jupiter: 2.34
+  Saturn: 1.06
+  Uranus: 0.92
+  Neptune: 1.19
+  Pluto: 0.06
+*/
+
 class HomeState extends State<Home> {
+  final TextEditingController _weightController = new TextEditingController();
+
   int radioValue = 0;
+  double _finalResult = 0.0;
 
   void handleRadioValueChanged(int value) {
     setState(() {
       radioValue = value;
 
-      print(radioValue);
+      switch (radioValue) {
+        case 0:
+          _finalResult = calculateWeight(_weightController.text, 0.06);
+        break;
+
+        case 1:
+          _finalResult = calculateWeight(_weightController.text, 0.38);
+        break;
+
+        case 2:
+          _finalResult = calculateWeight(_weightController.text, 0.91);
+        break;
+      }
     });
   }
 
@@ -44,7 +71,7 @@ class HomeState extends State<Home> {
               child: new Column(
                 children: <Widget>[
                   new TextField(
-                    controller: null,
+                    controller: _weightController,
                     keyboardType: TextInputType.number,
                     decoration: new InputDecoration(
                       labelText: 'Your Weight on Earth',
@@ -102,7 +129,7 @@ class HomeState extends State<Home> {
                       padding: new EdgeInsets.all(15.6)
                   ),
                   new Text(
-                    "Result",
+                    "$_finalResult",
                     style: new TextStyle(
                       color: Colors.white,
                       fontSize: 19.4,
@@ -116,6 +143,18 @@ class HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  double calculateWeight(String weight, double multiplier) {
+    if (int.parse(weight).toString().isNotEmpty && int.parse(weight) > 0) {
+      return int.parse(weight) * multiplier;
+    } else {
+      print("Wrong!");
+
+      return int.parse("180") * 0.38;
+    }
+
+
   }
 
 }
