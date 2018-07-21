@@ -24,6 +24,7 @@ class HomeState extends State<Home> {
 
   int radioValue = 0;
   double _finalResult = 0.0;
+  String _formattedText = "";
 
   void handleRadioValueChanged(int value) {
     setState(() {
@@ -32,14 +33,17 @@ class HomeState extends State<Home> {
       switch (radioValue) {
         case 0:
           _finalResult = calculateWeight(_weightController.text, 0.06);
+          _formattedText = "Your weight on Pluto is ${_finalResult.toStringAsFixed(1)} Kg";
         break;
 
         case 1:
           _finalResult = calculateWeight(_weightController.text, 0.38);
+          _formattedText = "Your weight on Mars is ${_finalResult.toStringAsFixed(1)} Kg";
         break;
 
         case 2:
           _finalResult = calculateWeight(_weightController.text, 0.91);
+          _formattedText = "Your weight on Venus is ${_finalResult.toStringAsFixed(1)} Kg";
         break;
       }
     });
@@ -129,7 +133,7 @@ class HomeState extends State<Home> {
                       padding: new EdgeInsets.all(15.6)
                   ),
                   new Text(
-                    "$_finalResult",
+                    _weightController.text.isEmpty ? "Please enter weight" : _formattedText,
                     style: new TextStyle(
                       color: Colors.white,
                       fontSize: 19.4,
